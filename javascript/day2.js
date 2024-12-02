@@ -27,7 +27,7 @@ const day2Part1 = () => {
   return sum
 }
 
-console.log(day2Part1())
+console.log("Day 2: Part 1: Solution: " + day2Part1())
 
 const day2Part2 = () => {
   const fileContents = fs.readFileSync('./input/day2-part1.txt', 'utf8')
@@ -52,4 +52,4 @@ const day2Part2 = () => {
   return sum;
 }
 
-console.log(day2Part2())
+console.log("Day 2: Part 2: Solution: " + day2Part2())

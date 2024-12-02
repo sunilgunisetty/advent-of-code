@@ -12,7 +12,7 @@ const day1Part1 = () => {
   return sum
 }
 
-// console.log(day1Part1());
+console.log("Day 1: Part 1: Solution: " + day1Part1());
 
 const stringToNumeric = {
   "one": "1",
@@ -41,4 +41,4 @@ const day1Part2 = () => {
   return sum
 }
 
-// console.log(day1Part2());
+console.log("Day 1: Part 2: Solution: " + day1Part2());
