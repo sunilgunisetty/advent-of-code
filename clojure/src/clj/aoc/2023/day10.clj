@@ -1,4 +1,4 @@
-(ns aoc.day10
+(ns aoc.2023.day10
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
@@ -97,9 +97,9 @@
 ;; 23...
 ;; Find the single giant loop starting at S. How many steps along the loop does it take to get from the starting position to the point farthest from the starting position?
 
-(def input (->> "input/day10.txt" io/resource slurp))
-(def sample-input (->> "input/day10-sample1.txt" io/resource slurp))
-(def sample-input2 (->> "input/day10-sample2.txt" io/resource slurp))
+(def input (->> "input/2023/day10.txt" io/resource slurp))
+(def sample-input (->> "input/2023/day10-sample1.txt" io/resource slurp))
+(def sample-input2 (->> "input/2023/day10-sample2.txt" io/resource slurp))
 
 (defn process-input
   [input]

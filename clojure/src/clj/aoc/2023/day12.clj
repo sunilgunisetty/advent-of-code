@@ -1,10 +1,10 @@
-(ns aoc.day12
+(ns aoc.2023.day12
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (->> "input/day12-sample.txt" io/resource slurp))
-(def input (->> "input/day12.txt" io/resource slurp))
+(def sample-input (->> "input/2023/day12-sample.txt" io/resource slurp))
+(def input (->> "input/2023/day12.txt" io/resource slurp))
 
 
 ;; --- Day 12: Hot Springs ---

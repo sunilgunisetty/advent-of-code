@@ -1,11 +1,11 @@
-(ns aoc.day13
+(ns aoc.2023.day13
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def input (->> "input/day13.txt" io/resource slurp))
+(def input (->> "input/2023/day13.txt" io/resource slurp))
 
-(def sample-input (->> "input/day13-sample.txt" io/resource slurp))
+(def sample-input (->> "input/2023/day13-sample.txt" io/resource slurp))
 
 ;; --- Day 13: Point of Incidence ---
 ;; With your help, the hot springs team locates an appropriate spring which launches you neatly and precisely up to the edge of Lava Island.

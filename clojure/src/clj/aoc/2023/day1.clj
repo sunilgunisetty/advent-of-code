@@ -1,4 +1,4 @@
-(ns aoc.day1
+(ns aoc.2023.day1
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
@@ -27,7 +27,7 @@
 
 (defn day-1-part-1
   []
-  (with-open [rdr (io/reader (io/resource "input/day1-part1.txt"))]
+  (with-open [rdr (io/reader (io/resource "input/2023/day1-part1.txt"))]
     (reduce (fn [acc line]
               (+ acc (->> line (filter #(Character/isDigit %)) ((juxt first last)) (string/join "") Integer/parseInt)))
             0
@@ -66,7 +66,7 @@
 
 (defn day-1-part-2
   []
-  (with-open [rdr (io/reader (io/resource "input/day1-part2.txt"))]
+  (with-open [rdr (io/reader (io/resource "input/2023/day1-part2.txt"))]
     (reduce (fn [acc line]
               (+ acc (->> line
                           (re-seq #"(?=(\d|one|two|three|four|five|six|seven|eight|nine))")

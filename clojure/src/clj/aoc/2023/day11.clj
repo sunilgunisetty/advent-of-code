@@ -1,11 +1,11 @@
-(ns aoc.day11
+(ns aoc.2023.day11
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
 
-(def input (->> "input/day11.txt" io/resource slurp string/split-lines))
-(def sample-input (->> "input/day11-sample.txt" io/resource slurp string/split-lines))
+(def input (->> "input/2023/day11.txt" io/resource slurp string/split-lines))
+(def sample-input (->> "input/2023/day11-sample.txt" io/resource slurp string/split-lines))
 
 (defn galaxies-position
   [input]

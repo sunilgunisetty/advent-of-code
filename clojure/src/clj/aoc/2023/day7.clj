@@ -1,4 +1,4 @@
-(ns aoc.day7
+(ns aoc.2023.day7
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
@@ -58,8 +58,8 @@
 
 
 
-(def input (->> "input/day7.txt" io/resource slurp))
-(def sample-input (->> "input/day7-sample.txt" io/resource slurp))
+(def input (->> "input/2023/day7.txt" io/resource slurp))
+(def sample-input (->> "input/2023/day7-sample.txt" io/resource slurp))
 
 (defn parse-input
   [input]

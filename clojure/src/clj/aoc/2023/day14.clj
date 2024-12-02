@@ -1,10 +1,10 @@
-(ns aoc.day14
+(ns aoc.2023.day14
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def input (->> "input/day14.txt" io/resource slurp))
-(def sample-input (->> "input/day14-sample.txt" io/resource slurp))
+(def input (->> "input/2023/day14.txt" io/resource slurp))
+(def sample-input (->> "input/2023/day14-sample.txt" io/resource slurp))
 
 ;; --- Day 14: Parabolic Reflector Dish ---
 ;; You reach the place where all of the mirrors were pointing: a massive parabolic reflector dish attached to the side of another large mountain.

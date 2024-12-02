@@ -1,4 +1,4 @@
-(ns aoc.day5
+(ns aoc.2023.day5
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
@@ -156,7 +156,7 @@
 
 (defn day5-part1
   []
-  (let [[seed & mappings] (-> "input/day5.txt" io/resource slurp (string/split #"\n\n"))
+  (let [[seed & mappings] (-> "input/2023/day5.txt" io/resource slurp (string/split #"\n\n"))
         parsed-mappings   (parse-mappings mappings)
         parsed-seeds      (parse-seeds seed)]
     (->> parsed-seeds
@@ -190,7 +190,7 @@
 
 (defn day5-part2
   []
-  (let [[seed & mappings] (-> "input/day5.txt" io/resource slurp (string/split #"\n\n"))
+  (let [[seed & mappings] (-> "input/2023/day5.txt" io/resource slurp (string/split #"\n\n"))
         parsed-mappings   (parse-mappings mappings)
         parsed-seeds      (take 2 (parse-seeds-part2 seed))]
     #_(->> parsed-seeds

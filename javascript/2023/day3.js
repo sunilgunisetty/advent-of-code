@@ -60,15 +60,14 @@ const day3Part1 = () => {
         return res;
     })
 
-    console.log(
-        data.map((item) => findSurrounding(fileContents,totalRows,totalCols,item))
-            .filter( e => !e.neighbors)
-            .map( e => parseInt(e.element))
-            .reduce((e, acc) => e + acc, 0)
-    )
+
+    return data.map((item) => findSurrounding(fileContents,totalRows,totalCols,item))
+        .filter( e => !e.neighbors)
+        .map( e => parseInt(e.element))
+        .reduce((e, acc) => e + acc, 0)
 }
 
-day3Part1();
+console.log("Day 3: Part 1: Solution: " + day3Part1());
 
 // const fileData = fs
 //       .readFileSync('./input/day3-sample.txt', 'utf8')

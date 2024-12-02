@@ -1,4 +1,4 @@
-(ns aoc.day6
+(ns aoc.2023.day6
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]))
@@ -62,11 +62,11 @@
        (map (fn [v] (string/replace v #" " "")))
        (map (fn [v] (Long/parseLong v)))))
 
-(def input-part1 (parse-races-part1 "input/day6.txt"))
-(def sample-part1 (parse-races-part1 "input/day6-sample.txt"))
+(def input-part1 (parse-races-part1 "input/2023/day6.txt"))
+(def sample-part1 (parse-races-part1 "input/2023/day6-sample.txt"))
 
-(def input-part2 (parse-races-part2 "input/day6.txt"))
-(def sample-part2 (parse-races-part2 "input/day6-sample.txt"))
+(def input-part2 (parse-races-part2 "input/2023/day6.txt"))
+(def sample-part2 (parse-races-part2 "input/2023/day6-sample.txt"))
 
 (defn distance-travelled
   [time-spent-holding total-time]
