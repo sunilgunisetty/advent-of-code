@@ -8,16 +8,20 @@
 (def sample-input-2 ["xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"])
 
 (def instruction #"mul\(([0-9]{1,3}),([0-9]{1,3})\)")
-
 (def valid-instruction #"don\'t\(\).*?do\(\)")
+
+(defn calculate
+  [instructions]
+  (->> instructions
+       (map (fn [[_ a b]] (* (Integer/parseInt a) (Integer/parseInt b))))
+       (apply +)))
 
 (defn day3-part1
   [input]
   (->> input
        (string/join "")
        (re-seq instruction)
-       (map (fn [[_ a b]] (* (Integer/parseInt a) (Integer/parseInt b))))
-       (apply +)))
+       calculate))
 
 (defn day3-part2
   [input]
@@ -25,5 +29,4 @@
     (string/join "" $)
     (string/replace $ valid-instruction "")
     (re-seq instruction $)
-    (map (fn [[_ a b]] (* (Integer/parseInt a) (Integer/parseInt b))) $)
-    (apply + $)))
+    (calculate $)))
