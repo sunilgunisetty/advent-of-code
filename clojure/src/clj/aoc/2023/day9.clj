@@ -68,8 +68,8 @@
 
 ;; Analyze your OASIS report and extrapolate the next value for each history. What is the sum of these extrapolated values?
 
-(def input (->> "input/2023/day9.txt" io/resource slurp))
-(def sample-input (->> "input/2023/day9-sample.txt" io/resource slurp))
+(def input (->> "../input/2023/day9.txt" slurp))
+(def sample-input (->> "../input/2023/day9-sample.txt" slurp))
 
 (defn parse-to-numbers
   [str-nums]

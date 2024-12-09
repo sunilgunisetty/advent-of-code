@@ -58,8 +58,8 @@
 
 
 
-(def input (->> "input/2023/day7.txt" io/resource slurp))
-(def sample-input (->> "input/2023/day7-sample.txt" io/resource slurp))
+(def input (->> "../input/2023/day7.txt" slurp))
+(def sample-input (->> "../input/2023/day7-sample.txt" slurp))
 
 (defn parse-input
   [input]

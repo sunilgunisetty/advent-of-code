@@ -3,8 +3,8 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (-> "input/2024/day1-sample.txt" io/resource slurp))
-(def input (-> "input/2024/day1.txt" io/resource slurp))
+(def sample-input (-> "../input/2024/day1-sample.txt" slurp))
+(def input (-> "../input/2024/day1.txt" slurp))
 
 
 (defn day1-part1

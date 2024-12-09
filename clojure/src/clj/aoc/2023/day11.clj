@@ -4,8 +4,8 @@
    [clojure.java.io :as io]))
 
 
-(def input (->> "input/2023/day11.txt" io/resource slurp string/split-lines))
-(def sample-input (->> "input/2023/day11-sample.txt" io/resource slurp string/split-lines))
+(def input (->> "../input/2023/day11.txt" slurp string/split-lines))
+(def sample-input (->> "../input/2023/day11-sample.txt" slurp string/split-lines))
 
 (defn galaxies-position
   [input]

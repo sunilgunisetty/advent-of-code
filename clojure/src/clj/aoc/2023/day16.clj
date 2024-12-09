@@ -3,9 +3,8 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (->> "input/2023/day16-sample.txt" io/resource slurp string/split-lines))
-
-(def input (->> "input/2023/day16.txt" io/resource slurp string/split-lines))
+(def sample-input (->> "../input/2023/day16-sample.txt" slurp string/split-lines))
+(def input (->> "../input/2023/day16.txt" slurp string/split-lines))
 
 ;; --- Day 16: The Floor Will Be Lava ---
 ;; With the beam of light completely focused somewhere, the reindeer leads you deeper still into the Lava Production Facility. At some point, you realize that the steel facility walls have been replaced with cave, and the doorways are just cave, and the floor is cave, and you're pretty sure this is actually just a giant cave.

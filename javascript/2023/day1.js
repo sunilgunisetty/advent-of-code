@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const day1Part1 = () => {
-  const fileContents = fs.readFileSync('./input/day1-part1.txt', 'utf8')
+  const fileContents = fs.readFileSync('../../input/2023/day1-part1.txt', 'utf8')
   let sum = 0;
   fileContents.split(/\r?\n/).filter(Boolean).forEach(line => {
     const numbers = [...line.matchAll(/\d/g)].map(([n]) => n)
@@ -27,7 +27,7 @@ const stringToNumeric = {
 }
 
 const day1Part2 = () => {
-  const fileContents = fs.readFileSync('./input/day1-part2.txt', 'utf-8')
+  const fileContents = fs.readFileSync('../../input/2023/day1-part2.txt', 'utf-8')
 
   let sum = 0
   fileContents.split(/\r?\n/).filter(Boolean).forEach(line => {

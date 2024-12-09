@@ -35,10 +35,10 @@
 ;; ZZZ = (ZZZ, ZZZ)
 ;; Starting at AAA, follow the left/right instructions. How many steps are required to reach ZZZ?
 
-(def sample-input (-> "input/2023/day8-sample.txt" io/resource slurp))
-(def sample-input-1 (-> "input/2023/day8-sample-1.txt" io/resource slurp))
-(def sample-input-part2 (-> "input/2023/day8-sample-part2.txt" io/resource slurp))
-(def input (-> "input/2023/day8.txt" io/resource slurp))
+(def sample-input (-> "../input/2023/day8-sample.txt" slurp))
+(def sample-input-1 (-> "../input/2023/day8-sample-1.txt" slurp))
+(def sample-input-part2 (-> "../input/2023/day8-sample-part2.txt" slurp))
+(def input (-> "../input/2023/day8.txt" slurp))
 
 (defn parse-input
   [input]

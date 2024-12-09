@@ -61,7 +61,7 @@
 
 (defn day-4-part-1
   []
-  (with-open [rdr (io/reader (io/resource "input/2023/day4.txt"))]
+  (with-open [rdr (io/reader "../input/2023/day4.txt")]
     (reduce (fn [acc line]
               (+ acc (process-line line)))
             0
@@ -139,7 +139,7 @@
 
 (defn day-4-part-2
   []
-  (with-open [rdr (io/reader (io/resource "input/2023/day4.txt"))]
+  (with-open [rdr (io/reader "../input/2023/day4.txt")]
     (let [data          (doall (line-seq rdr))
           pre-process   (pre-process data)
           scratch-cards (total-scratch-cards pre-process data)]

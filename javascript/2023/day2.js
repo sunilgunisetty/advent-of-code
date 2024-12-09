@@ -7,7 +7,7 @@ const cubeLimit = {
 }
 
 const day2Part1 = () => {
-  const fileContents = fs.readFileSync('./input/day2-part1.txt', 'utf8')
+  const fileContents = fs.readFileSync('../../input/2023/day2-part1.txt', 'utf8')
   let sum = 0
   fileContents.split(/\r?\n/).filter(Boolean).forEach(line => {
     const [gameId, gameData] = [...line.split(':')]
@@ -30,7 +30,7 @@ const day2Part1 = () => {
 console.log("Day 2: Part 1: Solution: " + day2Part1())
 
 const day2Part2 = () => {
-  const fileContents = fs.readFileSync('./input/day2-part1.txt', 'utf8')
+  const fileContents = fs.readFileSync('../../input/2023/day2-part1.txt', 'utf8')
   let sum = 0
   fileContents.split(/\r?\n/).filter(Boolean).forEach(line => {
     const [_, gameData] = [...line.split(':')]

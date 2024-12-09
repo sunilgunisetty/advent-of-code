@@ -3,8 +3,8 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def input (->> "input/2023/day15.txt" io/resource slurp string/trim-newline))
-(def sample-input (->> "input/2023/day15-sample.txt" io/resource slurp string/trim-newline))
+(def input (->> "../input/2023/day15.txt" slurp string/trim-newline))
+(def sample-input (->> "../input/2023/day15-sample.txt" slurp string/trim-newline))
 
 ;; --- Day 15: Lens Library ---
 ;; The newly-focused parabolic reflector dish is sending all of the collected light to a point on the side of yet another mountain - the largest mountain on Lava Island. As you approach the mountain, you find that the light is being collected by the wall of a large facility embedded in the mountainside.

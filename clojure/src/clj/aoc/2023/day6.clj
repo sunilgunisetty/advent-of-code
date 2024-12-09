@@ -48,7 +48,9 @@
 
 (defn parse-races-part1
   [input-file]
-  (->> (string/split (slurp (io/resource input-file)) #"\n")
+  (->> input-file
+       slurp
+       string/split-lines
        (map (fn [v] (string/trim (second (string/split v #"\:")))))
        (map (fn [v] (string/split v #"\s+")))
        (map (fn [x] (map (fn [y] (Integer/parseInt y)) x)))
@@ -57,16 +59,18 @@
 
 (defn parse-races-part2
   [input-file]
-  (->> (string/split (slurp (io/resource input-file)) #"\n")
+  (->> input-file
+       slurp
+       string/split-lines
        (map (fn [v] (string/trim (second (string/split v #"\:")))))
        (map (fn [v] (string/replace v #" " "")))
        (map (fn [v] (Long/parseLong v)))))
 
-(def input-part1 (parse-races-part1 "input/2023/day6.txt"))
-(def sample-part1 (parse-races-part1 "input/2023/day6-sample.txt"))
+(def input-part1 (parse-races-part1 "../input/2023/day6.txt"))
+(def sample-part1 (parse-races-part1 "../input/2023/day6-sample.txt"))
 
-(def input-part2 (parse-races-part2 "input/2023/day6.txt"))
-(def sample-part2 (parse-races-part2 "input/2023/day6-sample.txt"))
+(def input-part2 (parse-races-part2 "../input/2023/day6.txt"))
+(def sample-part2 (parse-races-part2 "../input/2023/day6-sample.txt"))
 
 (defn distance-travelled
   [time-spent-holding total-time]

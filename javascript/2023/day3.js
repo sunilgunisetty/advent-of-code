@@ -45,7 +45,7 @@ const findSurrounding = (contents, totalRows, totalCols, item) => {
 
 const day3Part1 = () => {
     const fileContents = fs
-          .readFileSync('./input/day3-part1.txt', 'utf8')
+          .readFileSync('../../input/2023/day3.txt', 'utf8')
           .split(/\r?\n/).filter(Boolean)
 
     const totalRows = fileContents.length

@@ -53,7 +53,7 @@
 
 (defn day-2-part1
   []
-  (with-open [rdr (io/reader (io/resource "input/2023/day2-part1.txt"))]
+  (with-open [rdr (io/reader "../input/2023/day2-part1.txt")]
     (reduce (fn [acc line]
               (+ acc (parse-game line)))
             0
@@ -92,7 +92,7 @@
 
 (defn day-2-part2
   []
-  (with-open [rdr (io/reader (io/resource "input/2023/day2-part1.txt"))]
+  (with-open [rdr (io/reader "../input/2023/day2-part1.txt")]
     (reduce (fn [acc line]
               (let [{:keys [red blue green]} (parse-game2 line)]
                 (+ acc (* red blue green))))

@@ -3,8 +3,8 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (->> "input/2023/day12-sample.txt" io/resource slurp))
-(def input (->> "input/2023/day12.txt" io/resource slurp))
+(def sample-input (->> "../input/2023/day12-sample.txt" slurp))
+(def input (->> "../input/2023/day12.txt" slurp))
 
 
 ;; --- Day 12: Hot Springs ---
@@ -102,17 +102,6 @@
 ;;       - else remove first group + 1 elements from pattern and remove first element from group and recur
 ;;   \? For this we have to condider no of ways if \? is replaced with \# and no of ways if we don'e consider this character
 
-(defn process-hash
-  [pattern ways]
-  (cond
-    (or (< (count pattern) (first ways))
-        (not (empty? (filter #(= % \.) (take (first ways) pattern)))))                0
-    (and (> (count pattern) (first ways)) (= (first (drop (first ways) pattern)) \#)) 0
-    (and (= (count pattern) (first ways)) (= (count ways)) 1)                         1
-    :else
-    (process-pattern (apply str (drop (inc (first ways)) pattern)) (rest ways))))
-
-(def memo-process-hash (memoize process-hash))
 
 (defn process-pattern
   [pattern ways]
@@ -126,7 +115,20 @@
       \# (memo-process-hash pattern ways)
       \? (+ (process-pattern (apply str (rest pattern)) ways) (memo-process-hash pattern ways)))))
 
+
 (def memo-process-pattern (memoize process-pattern))
+
+(defn process-hash
+  [pattern ways]
+  (cond
+    (or (< (count pattern) (first ways))
+        (not (empty? (filter #(= % \.) (take (first ways) pattern)))))                0
+    (and (> (count pattern) (first ways)) (= (first (drop (first ways) pattern)) \#)) 0
+    (and (= (count pattern) (first ways)) (= (count ways)) 1)                         1
+    :else
+    (process-pattern (apply str (drop (inc (first ways)) pattern)) (rest ways))))
+
+(def memo-process-hash (memoize process-hash))
 
 (defn calculate-result
   [processed-input]

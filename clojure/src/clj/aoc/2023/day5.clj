@@ -156,7 +156,7 @@
 
 (defn day5-part1
   []
-  (let [[seed & mappings] (-> "input/2023/day5.txt" io/resource slurp (string/split #"\n\n"))
+  (let [[seed & mappings] (-> "../input/2023/day5.txt" slurp (string/split #"\n\n"))
         parsed-mappings   (parse-mappings mappings)
         parsed-seeds      (parse-seeds seed)]
     (->> parsed-seeds
@@ -253,9 +253,9 @@ humidity-to-location map:
 
 
 
-99, 99
-50, 51, 52
+;; 99, 99
+;; 50, 51, 52
 
-(79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102)
+;; (79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102)
 
-79-97 98-99 100-102
+;; 79-97 98-99 100-102

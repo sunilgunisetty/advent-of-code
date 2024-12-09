@@ -64,7 +64,7 @@
 
 (defn day-3-part-1
   []
-  (with-open [rdr (io/reader (io/resource "input/2023/day3.txt"))]
+  (with-open [rdr (io/reader "../input/2023/day3.txt")]
     (let [res (map-indexed (fn [idx item] [idx item]) (doall (line-seq rdr)))]
       (reduce (fn [acc [curr-idx line]]
                 (let [result (process-line (into {} res) curr-idx line)]
@@ -158,7 +158,7 @@
 
 (defn day-3-part-2
   []
-  (with-open [rdr (io/reader (io/resource "input/2023/day3.txt"))]
+  (with-open [rdr (io/reader "../input/2023/day3.txt")]
     (gear-ratio (line-seq rdr))))
 
 ;; (day-3-part-2)
