@@ -20,93 +20,108 @@
 (def directions
   [[-1 0] [1 0] [0 1] [0 -1]])
 
+(def tagged-directions
+  [[:up [-1 0]] [:down [1 0]] [:left [0 -1]] [:right [0 1]]])
+
 (defn calculate-neighbors
   [[x y]]
   (map (fn [[x' y']] [(+ x x') (+ y y')]) directions))
 
 (defn explore
   [grid visited node]
-  (loop [seen  visited
-         queue [node]
-         res   []]
+  (loop [seen   visited
+         queue  [node]
+         region []]
     (if (seq queue)
       (cond
-        (some? (seen (first queue))) (recur seen (vec (rest queue)) res)
+        (some? (seen (first queue)))
+        (recur seen (vec (rest queue)) region)
+
         :else
-        (let [pos           (first queue)
-              current-plant (get grid pos)
-              neighbors     (->> pos
+        (let [plant-pos     (first queue)
+              current-plant (get grid plant-pos)
+              neighbors     (->> plant-pos
                                  calculate-neighbors
                                  (filter grid)
                                  (filter #(= (get grid %) current-plant))
                                  (remove seen))]
           (recur
-           (conj seen pos)
+           (conj seen plant-pos)
            (apply conj (vec (rest queue)) neighbors)
-           (conj res pos))))
-      [seen res])))
+           (conj region plant-pos))))
+      [seen region])))
 
-(defn find-connected-components
-  [input]
-  (let [grid         (parse-input input)
-        grid-size    (count input)
-        co-ordinates (for [x (range grid-size) y (range grid-size)] [x y])]
+(defn calculate-regions
+  [grid grid-size]
+  (let [co-ordinates (for [x (range grid-size) y (range grid-size)] [x y])]
     (loop [visited #{}
            nodes co-ordinates
-           res []]
+           regions []]
       (if (seq nodes)
         (if (visited (first nodes))
-          (recur visited (rest nodes) res)
-          (let [[new-visited connected-comp] (explore grid visited (first nodes))]
-            (recur new-visited (rest nodes) (conj res connected-comp))))
-        res))))
+          (recur visited (rest nodes) regions)
+          (let [[new-visited region] (explore grid visited (first nodes))]
+            (recur new-visited (rest nodes) (conj regions region))))
+        regions))))
 
 (defn calculate-perimeter
-  [grid connected-components]
+  [grid region]
   (reduce
-   (fn [acc pos]
-     (let [neighbors (calculate-neighbors pos)]
+   (fn [acc plant-position]
+     (let [neighbors (calculate-neighbors plant-position)]
        (+ acc
-          (loop [count 0
-                 neigh neighbors]
-            (if (seq neigh)
-              (let [n (first neigh)]
+          (loop [count     0
+                 neighbors neighbors]
+            (if (seq neighbors)
+              (let [neighbor (first neighbors)]
                 (cond
-                  (nil? (grid n)) (recur (inc count) (rest neigh))
-                  (not= (get grid n) (get grid pos)) (recur (inc count) (rest neigh))
+                  (nil? (grid neighbor))
+                  (recur (inc count) (rest neighbors))
+
+                  (not=
+                   (get grid neighbor)
+                   (get grid plant-position))
+                  (recur (inc count) (rest neighbors))
+
                   :else
-                  (recur count (rest neigh))))
+                  (recur count (rest neighbors))))
               count)))))
    0
-   connected-components))
+   region))
 
-(def directions-positions
-  [[:up [-1 0]] [:down [1 0]] [:left [0 -1]] [:right [0 1]]])
+(defn day12-part1
+  [input]
+  (let [grid    (parse-input input)
+        regions (calculate-regions grid (count input))]
+    (reduce
+     (fn [acc region]
+       (+ acc (* (count region) (calculate-perimeter grid region))))
+     0 regions)))
 
 (defn up-calculate
   [{:keys [up left right]}]
   (reduce
    (fn [acc [x y]]
-     (let [u [(some? (left [x y]))
+     (+ acc
+        (->> [(some? (left [x y]))
               (some? (right [x y]))
               (and (right [(dec x) (dec y)]) (not (left [x y])))
-              (and (left [(dec x) (inc y)]) (not (right [x y])))]]
-       (+ acc
-          (count
-           (filter true? u)))))
+              (and (left [(dec x) (inc y)]) (not (right [x y])))]
+             (filter true?)
+             count)))
    0 up))
 
 (defn down-calculate
   [{:keys [down left right]}]
   (reduce
    (fn [acc [x y]]
-     (let [u [(some? (left [x y]))
+     (+ acc
+        (->> [(some? (left [x y]))
               (some? (right [x y]))
               (and (right [(inc x) (dec y)]) (not (left [x y])))
-              (and (left [(inc x) (inc y)]) (not (right [x y])))]]
-       (+ acc
-          (count
-           (filter true? u)))))
+              (and (left [(inc x) (inc y)]) (not (right [x y])))]
+             (filter true?)
+             count)))
    0 down))
 
 (defn calculate-sides
@@ -124,29 +139,18 @@
              (map
               (fn [[pos [x' y']]]
                 [pos (not (region [(+ x x') (+ y y')]))])
-              directions-positions))))
+              tagged-directions))))
          initial-state
          region)]
     (+ (up-calculate state) (down-calculate state))))
 
-(defn day12-part1
-  [input]
-  (let [grid                 (parse-input input)
-        connected-components (find-connected-components input)]
-    (reduce
-     (fn [acc components]
-       (+ acc (* (count components) (calculate-perimeter grid components))))
-     0 connected-components)))
-
-;; Followed method of counting cornors method detailed in this https://www.youtube.com/watch?v=iKCgjy7-2nY
+;; Followed method of counting cornors method detailed in this video https://www.youtube.com/watch?v=iKCgjy7-2nY
 (defn day12-part2
   [input]
-  (let [connected-components (find-connected-components input)]
+  (let [grid                 (parse-input input)
+        connected-components (calculate-regions grid (count input))]
     (reduce
      (fn [acc component]
        (let [sides-cost (calculate-sides (into #{} component))]
          (+ acc (* (count component) sides-cost))))
      0 connected-components)))
-
-
-;; TODO needs refactoring ... :(
