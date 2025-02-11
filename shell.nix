@@ -3,5 +3,6 @@ pkgs.mkShell {
   buildInputs = with pkgs; [
     clojure
     nodejs
+    python311
   ];
 }
