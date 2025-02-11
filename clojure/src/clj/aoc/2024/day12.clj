@@ -80,6 +80,55 @@
    0
    connected-components))
 
+(def directions-positions
+  [[:up [-1 0]] [:down [1 0]] [:left [0 -1]] [:right [0 1]]])
+
+(defn up-calculate
+  [{:keys [up left right]}]
+  (reduce
+   (fn [acc [x y]]
+     (let [u [(some? (left [x y]))
+              (some? (right [x y]))
+              (and (right [(dec x) (dec y)]) (not (left [x y])))
+              (and (left [(dec x) (inc y)]) (not (right [x y])))]]
+       (+ acc
+          (count
+           (filter true? u)))))
+   0 up))
+
+(defn down-calculate
+  [{:keys [down left right]}]
+  (reduce
+   (fn [acc [x y]]
+     (let [u [(some? (left [x y]))
+              (some? (right [x y]))
+              (and (right [(inc x) (dec y)]) (not (left [x y])))
+              (and (left [(inc x) (inc y)]) (not (right [x y])))]]
+       (+ acc
+          (count
+           (filter true? u)))))
+   0 down))
+
+(defn calculate-sides
+  [region]
+  (let [initial-state {:up #{} :down #{} :left #{} :right #{}}
+        state
+        (reduce
+         (fn [acc [x y]]
+           (reduce
+            (fn [acc [pos _]]
+              (update acc pos #(conj % [x y])))
+            acc
+            (filter
+             (fn [[_ truthy]] truthy)
+             (map
+              (fn [[pos [x' y']]]
+                [pos (not (region [(+ x x') (+ y y')]))])
+              directions-positions))))
+         initial-state
+         region)]
+    (+ (up-calculate state) (down-calculate state))))
+
 (defn day12-part1
   [input]
   (let [grid                 (parse-input input)
@@ -88,3 +137,16 @@
      (fn [acc components]
        (+ acc (* (count components) (calculate-perimeter grid components))))
      0 connected-components)))
+
+;; Followed method of counting cornors method detailed in this https://www.youtube.com/watch?v=iKCgjy7-2nY
+(defn day12-part2
+  [input]
+  (let [connected-components (find-connected-components input)]
+    (reduce
+     (fn [acc component]
+       (let [sides-cost (calculate-sides (into #{} component))]
+         (+ acc (* (count component) sides-cost))))
+     0 connected-components)))
+
+
+;; TODO needs refactoring ... :(
