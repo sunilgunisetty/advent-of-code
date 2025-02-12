@@ -147,10 +147,68 @@
 ;; Followed method of counting cornors method detailed in this video https://www.youtube.com/watch?v=iKCgjy7-2nY
 (defn day12-part2
   [input]
-  (let [grid                 (parse-input input)
-        connected-components (calculate-regions grid (count input))]
+  (let [grid    (parse-input input)
+        regions (calculate-regions grid (count input))]
     (reduce
-     (fn [acc component]
-       (let [sides-cost (calculate-sides (into #{} component))]
-         (+ acc (* (count component) sides-cost))))
-     0 connected-components)))
+     (fn [acc region]
+       (let [area  (count region)
+             sides (calculate-sides (into #{} region))]
+         (+ acc (* area sides))))
+     0 regions)))
+
+
+
+
+;; Another soultion which
+
+(def cornor-coordinates
+  [[[-1 0] [0 -1] [-1 -1]] ;; top left cornor neighbors
+   [[-1 0] [0 1] [-1 1]]   ;; top right cornor neighbors
+   [[1 0] [0 1] [1 1]]     ;; bottom right cornor neighbors
+   [[1 0] [0 -1] [1 -1]]]) ;; bottom left cornor neighbors
+
+(defn filter-cornor-plant-plots
+  [grid [x y :as plot]]
+  (->> cornor-coordinates
+       (map (fn [cornor]
+              (map (fn [[x' y']] [(+ x x') (+ y y')]) cornor)))
+       (filter
+        (fn [[adj1 adj2 opposite]]
+          (let [plot-plant     (get grid plot)
+                adj1-plant    (get grid adj1)
+                adj2-plant    (get grid adj2)
+                opposite-plant (get grid opposite)]
+            ;; (If both adjecent plants are not equal to current plant)
+            ;; OR (if both adjecent plats are equal to current plant AND
+            ;; plant is not equal to opposite plant[diagonal]
+            ;; Then it contributes to cornor.
+            (or
+             (and
+              (not= plot-plant adj1-plant)
+              (not= plot-plant adj2-plant))
+             (and
+              (= plot-plant adj1-plant)
+              (= plot-plant adj2-plant)
+              (not= plot-plant opposite-plant))))))))
+
+(defn calculate-sides-another-solution
+  [grid region]
+  (loop [plant-plots region
+         cornors     0]
+    (if (seq plant-plots)
+      (let [plot         (first plant-plots)
+            plot-cornors (count (filter-cornor-plant-plots grid plot))]
+        (recur (rest plant-plots) (+ cornors plot-cornors)))
+      cornors)))
+
+
+(defn day12-part2-another-solution
+  [input]
+  (let [grid    (parse-input input)
+        regions (calculate-regions grid (count input))]
+    (reduce
+     (fn [acc region]
+       (let [area (count region)
+             sides (calculate-sides-another-solution grid region)]
+         (+ acc (* area sides))))
+     0 regions)))
