@@ -46,6 +46,10 @@ fi
 if [[ ! -f "$DIR/$FILE" ]]; then
     echo "File doesn't exists, creating..."
     touch "$DIR/$FILE"
+    echo -n "(ns aoc.${YEAR}.day${DAY}
+  (:require
+   [clojure.string :as string]
+   [clojure.java.io :as io]))" > "$DIR/$FILE"
 fi
 
 if [[ -f "input/${YEAR}/day${DAY}.txt" ]]; then
