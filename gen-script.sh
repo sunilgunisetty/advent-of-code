@@ -2,63 +2,63 @@
 
 set -eou pipefail
 
-DAY=$1
-YEAR=$2
+day=$1
+year=$2
 
-if [ -z "$DAY" ]; then
+if [ -z "$day" ]; then
     echo "Please enter day."
     exit 0
 fi
 
-if (("$DAY" > 25 || "$DAY" < 1)); then
+if (("$day" > 25 || "$day" < 1)); then
     echo "Invalid day $1"
     exit 0
 fi
 
-if (("$YEAR" < 2015 || "$YEAR" > $(date +"%Y"))); then
+if (("$year" < 2015 || "$year" > $(date +"%Y"))); then
     echo "No AOC for year: $2"
     exit 0
 fi
 
 if [[ -f ".aoc_session" ]]; then
-  AOCSESSION=$(<".aoc_session")
+  aoc_session=$(<".aoc_session")
 fi
 
-if [ -z "$AOCSESSION" ]; then
-    echo "AOCSESSION missing. Cannot continue."
+if [ -z "$aoc_session" ]; then
+    echo "Session missing. Cannot continue."
     exit 0
 fi
 
-VALIDSESSION=$(curl -s "https://adventofcode.com/${YEAR}/day/1/input" --cookie "session=${AOCSESSION}")
-if [[ $VALIDSESSION =~ "Puzzle inputs differ by user." ]] || [[ $VALIDSESSION =~ "500 Internal Server" ]]; then
+valid_session=$(curl -s "https://adventofcode.com/${year}/day/1/input" --cookie "session=${aoc_session}")
+if [[ $valid_session =~ "Puzzle inputs differ by user." ]] || [[ $valid_session =~ "500 Internal Server" ]]; then
     echo "Invalid SESSION. Cannot continue."
     exit 0
 fi
 
-DIR="clojure/src/clj/aoc/$YEAR"
-FILE="day$DAY.clj"
+dir="clojure/src/clj/aoc/${year}"
+file="day${day}.clj"
 
-if [[ ! -d "$DIR" ]]; then
+if [[ ! -d "$dir" ]]; then
     echo "Directory doesnot exists, creating..."
-    mkdir -p $DIR
+    mkdir -p $dir
 fi
 
-if [[ ! -f "$DIR/$FILE" ]]; then
+if [[ ! -f "${dir}/${file}" ]]; then
     echo "File doesn't exists, creating..."
-    touch "$DIR/$FILE"
-    echo -n "(ns aoc.${YEAR}.day${DAY}
+    touch "${dir}/${file}"
+    echo -n "(ns aoc.${year}.day${day}
   (:require
    [clojure.string :as string]
-   [clojure.java.io :as io]))" > "$DIR/$FILE"
+   [clojure.java.io :as io]))" > "${dir}/${file}"
 fi
 
-if [[ -f "input/${YEAR}/day${DAY}.txt" ]]; then
-    echo "Script already ran for ${YEAR} - ${DAY}"
+if [[ -f "input/${year}/day${day}.txt" ]]; then
+    echo "Script already ran for ${year} - ${day}"
     exit 0
 fi
 
-if [[ ! -d "input/${YEAR}" ]]; then
-    mkdir -p "input/${YEAR}"
+if [[ ! -d "input/${year}" ]]; then
+    mkdir -p "input/${year}"
 fi
 
-curl -s "https://adventofcode.com/${YEAR}/day/${DAY}/input" --cookie "session=${AOCSESSION}" -o "input/${YEAR}/day${DAY}.txt"
+curl -s "https://adventofcode.com/${year}/day/${day}/input" --cookie "session=${aoc_session}" -o "input/${year}/day${day}.txt"
