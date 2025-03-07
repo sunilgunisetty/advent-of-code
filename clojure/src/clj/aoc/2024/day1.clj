@@ -3,7 +3,7 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (-> "../input/2024/day1-sample.txt" slurp))
+(def sample-input (-> "../input/2024/day1-ex.txt" slurp))
 (def input (-> "../input/2024/day1.txt" slurp))
 
 

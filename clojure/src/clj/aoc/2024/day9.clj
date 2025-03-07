@@ -4,7 +4,7 @@
    [clojure.java.io :as io]))
 
 
-(def sample-input (-> "../input/2024/day9-sample.txt" slurp string/trim))
+(def sample-input (-> "../input/2024/day9-ex.txt" slurp string/trim))
 (def input (-> "../input/2024/day9.txt" slurp string/trim))
 
 (defn replace-at [s idx replacement]

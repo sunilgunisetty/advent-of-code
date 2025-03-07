@@ -3,7 +3,7 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (->> "../input/2024/day3-sample.txt" slurp string/split-lines))
+(def sample-input (->> "../input/2024/day3-ex.txt" slurp string/split-lines))
 (def input (->> "../input/2024/day3.txt" slurp string/split-lines))
 (def sample-input-2 ["xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"])
 

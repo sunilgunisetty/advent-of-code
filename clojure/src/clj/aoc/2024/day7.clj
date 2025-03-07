@@ -9,7 +9,7 @@
     [(parse-long total)
      (map (fn [v] (-> v string/trim parse-long)) (string/split (string/trim digits) #" "))]))
 
-(def sample-input (->> "../input/2024/day7-sample.txt" slurp string/split-lines (map process-equation)))
+(def sample-input (->> "../input/2024/day7-ex.txt" slurp string/split-lines (map process-equation)))
 (def input (->> "../input/2024/day7.txt" slurp string/split-lines (map process-equation)))
 
 (defn valid-eq-part-1?

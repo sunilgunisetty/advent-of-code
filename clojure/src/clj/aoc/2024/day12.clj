@@ -3,7 +3,7 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (-> "../input/2024/day12-sample.txt" slurp string/split-lines))
+(def sample-input (-> "../input/2024/day12-ex.txt" slurp string/split-lines))
 (def input (-> "../input/2024/day12.txt" slurp string/split-lines))
 
 (defn indexed

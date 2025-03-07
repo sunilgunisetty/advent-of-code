@@ -29,7 +29,7 @@
               [j ch]  (indexed (apply vector row))]
           [[i j] ch])))
 
-(def sample-input (->> "../input/2024/day6-sample.txt" slurp string/split-lines process-input))
+(def sample-input (->> "../input/2024/day6-ex.txt" slurp string/split-lines process-input))
 (def input (->> "../input/2024/day6.txt" slurp string/split-lines process-input))
 
 (defn find-guard

@@ -24,7 +24,7 @@
           (assoc acc k (sort-by first (map first v))))
         {})))
 
-(def sample-input (-> "../input/2024/day8-sample.txt" slurp string/split-lines))
+(def sample-input (-> "../input/2024/day8-ex.txt" slurp string/split-lines))
 (def input (-> "../input/2024/day8.txt" slurp string/split-lines))
 
 (defn antenna-pairs

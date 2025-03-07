@@ -4,7 +4,7 @@
    [clojure.java.io :as io]))
 
 (def input (-> "../input/2024/day13.txt" slurp))
-(def sample-input (-> "../input/2024/day13-sample.txt" slurp))
+(def sample-input (-> "../input/2024/day13-ex.txt" slurp))
 
 (defn solve-equation
   [[a1 a2 b1 b2 c1 c2]]

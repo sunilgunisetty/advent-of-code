@@ -10,7 +10,7 @@
     (string/split $ #"\n\n")
     (map string/split-lines $)))
 
-(def sample-input (parse-file "../input/2024/day5-sample.txt"))
+(def sample-input (parse-file "../input/2024/day5-ex.txt"))
 (def input (parse-file "../input/2024/day5.txt"))
 
 (defn process-ordering

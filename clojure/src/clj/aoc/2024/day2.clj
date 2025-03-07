@@ -3,7 +3,7 @@
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def sample-input (->> "../input/2024/day2-sample.txt" slurp string/split-lines))
+(def sample-input (->> "../input/2024/day2-ex.txt" slurp string/split-lines))
 (def input (->> "../input/2024/day2.txt" slurp string/split-lines))
 
 (defn parse-reports

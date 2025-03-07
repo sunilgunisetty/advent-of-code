@@ -4,7 +4,7 @@
    [clojure.java.io :as io]))
 
 (def input (->> "../input/2024/day4.txt" slurp string/split-lines))
-(def sample-input (->> "../input/2024/day4-sample.txt" slurp string/split-lines))
+(def sample-input (->> "../input/2024/day4-ex.txt" slurp string/split-lines))
 
 
 (defn valid-position?
