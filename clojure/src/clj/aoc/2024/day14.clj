@@ -45,25 +45,59 @@
    (fn [[[x y] [dx dy]]]
      (move x y dx dy wide tall seconds)) robots))
 
-(defn add-to-quadrant
-  [ignore-x ignore-y robots]
-  (reduce
-   (fn [acc [x y]]
-     (cond
-       (or (= x ignore-x) (= y ignore-y)) acc
-       (and
-        (< x ignore-x) (< y ignore-y)) (update acc :top-left #(conj % [x y]))
-       (and
-        (< x ignore-x) (> y ignore-y)) (update acc :bottom-left #(conj % [x y]))
-       (and
-        (> x ignore-x) (< y ignore-y)) (update acc :top-right #(conj % [x y]))
-       (and
-        (> x ignore-x) (> y ignore-y)) (update acc :bottom-right #(conj % [x y]))
-       :else
-       (assert "invalid case"))
-     )
-   {:top-left [] :top-right [] :bottom-left [] :bottom-right []}
-   robots))
+(defn place-robots-into-quadrants
+  [tiles-wide tiles-tall duration robots]
+  (let [ignore-x (int (/ tiles-wide 2))
+        ignore-y (int (/ tiles-tall 2))]
+    (reduce
+     (fn [acc [[x y] [dx dy]]]
+       (let [[x' y'] (move x y dx dy tiles-wide tiles-tall duration)]
+         (cond
+           (or
+            (= x' ignore-x) (= y' ignore-y)) acc
+           (and
+            (< x' ignore-x) (< y' ignore-y)) (update acc :top-left #(conj % [x' y']))
+           (and
+            (< x' ignore-x) (> y' ignore-y)) (update acc :bottom-left #(conj % [x' y']))
+           (and
+            (> x' ignore-x) (< y' ignore-y)) (update acc :top-right #(conj % [x' y']))
+           (and
+            (> x' ignore-x) (> y' ignore-y)) (update acc :bottom-right #(conj % [x' y']))
+           :else
+           (assert "invalid case"))))
+     {:top-left     []
+      :top-right    []
+      :bottom-left  []
+      :bottom-right []}
+     robots)))
+
+(defn safty-factor
+  [robots-quadrants]
+  (->> robots-quadrants vals (map count) (apply *)))
+
+(defn day14-part1
+  [input wide tall duration]
+  (->> input
+       (place-robots-into-quadrants wide tall duration)
+       safty-factor))
+
+(def part1-sample
+  (day14-part1 sample-input 11 7 100))
+
+(def part1-input
+  (day14-part1 input 101 103 100))
+
+(defn day14-part2
+  [input wide tall]
+  (ffirst
+   (sort-by second
+            (for [duration (range 1 10000)]
+              [duration (day14-part1 input wide tall duration)]))))
+
+;; intuition
+;; When robots form a tree, some quadrants will have low no of robots and the safety factor will be lower.
+(def part2
+  (day14-part2 input 101 103))
 
 ;; used to display the result takes robots final position as set
 (defn print-robots
@@ -71,42 +105,12 @@
   (doseq [row (map second (sort-by first (group-by first (for [i (range 103) j (range 101)] [i j]))))]
     (prn (string/join "" (map (fn [v] (if (robots v) \# \ )) row)))))
 
-(defn quadrant-count
-  [robots-quadrants]
-  (reduce-kv (fn [acc k v] (assoc acc k (count v))) {} robots-quadrants))
-
-(defn safty-factor
-  [robots-quadrants]
-  (->> robots-quadrants vals (map count) (apply *)))
-
-(defn day14-part1
-  [input wide tall ignore-x ignore-y seconds]
-  (->> input
-       (calculate-positions seconds wide tall)
-       (add-to-quadrant ignore-x ignore-y)
-       safty-factor))
-
-(def part1
-  (day14-part1 input 101 103 50 51 100))
-
-(defn day14-part2
-  [input wide tall ignore-x ignore-y]
-  (ffirst
-   (sort-by second
-            (for [i (range 1 10000)]
-              [i (day14-part1 input wide tall ignore-x ignore-y i)]))))
-
-;; intuition
-;; When robots form a tree, some quadrants will have low no of robots and the safety factor will be lower.
-(def part2
-  (day14-part2 input 101 103 50 51))
-
 (defn print-tree
   [input]
   (->> input
        (calculate-positions 7037 101 103)
        (into #{})
-       (print-robots)))
+       print-robots))
 
 (comment
   "                                                                #                         #          "
