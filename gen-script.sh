@@ -49,8 +49,8 @@ if [[ ! -f "${dir}/${file}" ]]; then
    [clojure.string :as string]
    [clojure.java.io :as io]))
 
-(def input (-> \"../input/2024/day${day}.txt\" slurp))
-(def sample-input (-> \"../input/2024/day${day}-ex.txt\" slurp))" > "${dir}/${file}"
+(def input (-> \"../input/${year}/day${day}.txt\" slurp))
+(def sample-input (-> \"../input/${year}/day${day}-ex.txt\" slurp))" > "${dir}/${file}"
 fi
 
 if [[ -f "input/${year}/day${day}.txt" ]]; then
