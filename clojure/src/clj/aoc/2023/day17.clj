@@ -18,35 +18,37 @@
 ;; [[x y] :H|:V] Heat
 ;; :H indicates going East and West
 ;; :V indicates going North and South
+;; Note: Priority hashmap is also used a visited set
 
-(def up    [-1 0])
-(def down  [1 0])
-(def left  [0 -1])
-(def right [0 1])
+(def UP    [-1 0])
+(def DOWN  [1 0])
+(def LEFT  [0 -1])
+(def RIGHT [0 1])
 
 (defn calculate-positions
   [grid [[x y] direction-coordinates] heat steps]
   (let [deltas (for [direction-coordinates [direction-coordinates]
-                     n                     steps]
+                     n                     (range 1 (inc (last steps)))]
                  (mapv (partial * n) direction-coordinates))]
     (loop [deltas' deltas result [] heat' heat]
       (if-not (seq deltas')
-        result
+        (drop (dec (first steps)) result)
         (let [[dx dy] (first deltas')
               nx      (+ x dx)
               ny      (+ y dy)]
           (if-not (grid [nx ny])
-            result
+            (drop (dec (first steps)) result)
             (let [nheat (+ heat' (parse-long (str (grid [nx ny]))))]
               (recur (rest deltas') (conj result [[nx ny] nheat]) nheat))))))))
 
 (defn valid-neighbors
   [grid [[x y] direction] heat steps]
-  (let [direction-coordinates (if (= direction :H) [left right] [up down])]
+  (let [direction-coordinates (if (= direction :H) [LEFT RIGHT] [UP DOWN])]
     (->> direction-coordinates
          (mapcat (fn [direction-coordinate]
                    (calculate-positions grid [[x y] direction-coordinate] heat steps)))
-         (map (fn [[position heat]] [[position (if (= direction :H) :V :H)] heat])))))
+         (map (fn [[position heat]]
+                [[position (if (= direction :H) :V :H)] heat])))))
 
 (defn explore
   [grid steps]
@@ -58,11 +60,32 @@
         (cond
           (nil? current-node) nil
 
-          (= end pos)         heat
+          (= end pos) heat
 
           :else
-          (let [neighbors (->> steps
-                               (valid-neighbors grid current-node heat)
-                               (filter (fn [[n n-heat]] (< n-heat (get queue n Long/MAX_VALUE))))
-                               (filter (fn [[n n-heat]] (< n-heat (best-cost n Long/MAX_VALUE)))))]
-            (recur (into (pop queue) neighbors) (assoc best-cost current-node heat))))))))
+          (let [neighbors
+                (->> steps
+                     (valid-neighbors grid current-node heat)
+                     (filter
+                      (fn [[next-node next-heat]]
+                        (< next-heat (get queue next-node Long/MAX_VALUE))))
+                     (filter
+                      (fn [[next-node next-heat]]
+                        (< next-heat (best-cost next-node Long/MAX_VALUE)))))]
+            (recur
+             (into (pop queue) neighbors)
+             (assoc best-cost current-node heat))))))))
+
+(defn day17-part1
+  [input]
+  (explore input [1 2 3]))
+
+(defn day17-part2
+  [input]
+  (explore input (range 4 11)))
+
+
+;; NOTE
+;; Resources used to solve
+;; * https://www.youtube.com/watch?v=8w_rDPdAfBE
+;; * https://gitlab.com/maximoburrito/advent2023/-/blob/main/src/day17/main.clj?ref_type=heads
