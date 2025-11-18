@@ -15,9 +15,7 @@ for element in list2:
     else:
         frequencies[element] = frequencies.get(element) + 1;
 
-
 part2 = sum(e * frequencies[e] for e in list1 if frequencies.get(e) != None)
-
 
 print(f'Part1 : {part1}')
 print(f'Part2 : {part2}')
