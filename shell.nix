@@ -4,7 +4,7 @@ pkgs.mkShell {
     clojure
     nodejs
     python311
-    python311Packages.python-lsp-server
+    python313Packages.python-lsp-server
     ocaml
     ocamlPackages.utop
   ];
