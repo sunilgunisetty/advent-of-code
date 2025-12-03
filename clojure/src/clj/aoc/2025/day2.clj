@@ -33,22 +33,39 @@
                    (= repeated number-string)))))
          boolean)))
 
+(defn invalid-part1-regex?
+  [number]
+  (some? (re-find #"^(.+)\1$" (str number))))
+
+(defn invalid-part2-regex?
+  [number]
+  (some? (re-find #"^(.+)\1+$" (str number))))
+
 (defn process-range
   [filter-fn [start end]]
   (->> (range start (inc end))
        (filter filter-fn)
        (apply +)))
 
-(defn day2-part1
-  [input]
+(defn day2-solution
+  [input filter-fn]
   (->> input
        parse-input
-       (map (partial process-range invalid-part1?))
+       (map (partial process-range filter-fn))
        (apply +)))
 
+(defn day2-part1
+  []
+  (day2-solution input invalid-part1?))
+
 (defn day2-part2
-  [input]
-  (->> input
-       parse-input
-       (map (partial process-range invalid-part2?))
-       (apply +)))
+  []
+  (day2-solution input invalid-part2?))
+
+(defn day2-part1-regex
+  []
+  (day2-solution input invalid-part1-regex?))
+
+(defn day2-part2-regex
+  []
+  (day2-solution input invalid-part2-regex?))
